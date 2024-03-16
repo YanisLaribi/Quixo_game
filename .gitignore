@@ -1,0 +1,10 @@
+# Exclure absolument tous les fichiers/dossiers
+/**/*
+
+# Parmi les fichiers/dossiers exclus, autoriser les suivants:
+!/.gitignore
+!/README.md
+!/quixo.py
+!/main.py
+!/api.py
+!/tests.py
