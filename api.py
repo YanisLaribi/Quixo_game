@@ -30,8 +30,24 @@ def lister_parties(idul, secret):
         list: Liste des parties reçues du serveur,
              après avoir décodé le json de sa réponse.
     """
-    pass
+    rep = requests.get(URL + "parties/", auth = (idul, secret))
+    
+    if rep.status_code == 200:
+       list = rep.json()
+       parties = list.get('parties')
+       return(parties)
+    
+    if rep.status_code == 401:
 
+       raise PermissionError(rep.json()["message"])
+
+    if rep.status_code == 406:
+
+       raise RuntimeError(rep.json()["message"])
+    
+    else : 
+        raise ConnectionError
+    
 
 def débuter_partie(idul, secret):
     """Débuter une partie
@@ -49,7 +65,25 @@ def débuter_partie(idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
-    pass
+    rep = requests.post(URL + "partie/", auth = (idul, secret))
+
+    if rep.status_code == 200:
+        tupl = rep.json()
+
+        identifiant = tupl.get('id')
+        liste_joueur = tupl.get('état').get('joueurs')
+        état_du_plateau = tupl.get('état')
+
+        return identifiant, liste_joueur, état_du_plateau
+    
+    if rep.status_code == 401:
+       raise PermissionError(rep.json()["message"])
+
+    if rep.status_code == 406:
+       raise RuntimeError(rep.json()["message"])
+    
+    else : 
+        raise ConnectionError
 
 
 def récupérer_partie(id_partie, idul, secret):
@@ -69,7 +103,28 @@ def récupérer_partie(id_partie, idul, secret):
         tuple: Tuple de 4 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs, de l'état du plateau et du vainqueur.
     """
-    pass
+    url = f"https://pax.ulaval.ca/quixo/api/h24/partie/{id_partie}"
+    rep = requests.get(url, auth = (idul, secret))
+
+    if rep.status_code == 200:
+
+        tupl = rep.json()
+
+        identifiant = tupl.get('id')
+        liste_joueur = tupl.get('état').get('joueurs')
+        état_du_plateau = tupl.get('état')
+        vainqueur = tupl.get('gagnant')
+
+        return identifiant, liste_joueur, état_du_plateau, vainqueur
+    
+    if rep.status_code == 401:
+       raise PermissionError(rep.json()["message"])
+
+    if rep.status_code == 406:
+       raise RuntimeError(rep.json()["message"])
+    
+    else : 
+        raise ConnectionError
 
 
 def jouer_coup(id_partie, origine, direction, idul, secret):
@@ -96,4 +151,3 @@ def jouer_coup(id_partie, origine, direction, idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
-    pass
