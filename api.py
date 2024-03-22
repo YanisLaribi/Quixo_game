@@ -37,11 +37,11 @@ def lister_parties(idul, secret):
        parties = list.get('parties')
        return(parties)
     
-    if rep.status_code == 401:
+    elif rep.status_code == 401:
 
        raise PermissionError(rep.json()["message"])
 
-    if rep.status_code == 406:
+    elif rep.status_code == 406:
 
        raise RuntimeError(rep.json()["message"])
     
@@ -76,10 +76,10 @@ def débuter_partie(idul, secret):
 
         return identifiant, liste_joueur, état_du_plateau
     
-    if rep.status_code == 401:
+    elif rep.status_code == 401:
        raise PermissionError(rep.json()["message"])
 
-    if rep.status_code == 406:
+    elif rep.status_code == 406:
        raise RuntimeError(rep.json()["message"])
     
     else : 
@@ -117,10 +117,10 @@ def récupérer_partie(id_partie, idul, secret):
 
         return identifiant, liste_joueur, état_du_plateau, vainqueur
     
-    if rep.status_code == 401:
+    elif rep.status_code == 401:
        raise PermissionError(rep.json()["message"])
 
-    if rep.status_code == 406:
+    elif rep.status_code == 406:
        raise RuntimeError(rep.json()["message"])
     
     else : 
@@ -151,3 +151,23 @@ def jouer_coup(id_partie, origine, direction, idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
+    rep = requests.put(URL + "jouer/", auth = (idul, secret))
+    if rep.status_code == 200:
+        partie_data = rep.json()
+        partie_id = partie_data.get('id')
+        joueurs = partie_data.get('état').get('joueurs')
+        plateau = partie_data.get('état').get('plateau')
+        return partie_id, joueurs, plateau
+    
+    elif rep.status_code == 200 and rep.json().get('gagnant'):
+        raise StopIteration(f"{rep.json().get('gagnant')}")
+    
+    elif rep.status_code == 401:
+       raise PermissionError(rep.json()["message"])
+
+    elif rep.status_code == 406:
+       raise RuntimeError(rep.json()["message"])
+    
+    else : 
+        raise ConnectionError
+    
