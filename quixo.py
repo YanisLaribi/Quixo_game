@@ -35,7 +35,15 @@ def formater_légende(joueurs):
     Returns:
         str: Chaîne de caractères représentant la légende.
     """
-    pass
+    légende = "Légende: "
+    for i, joueur in enumerate(joueurs):
+        if i == 0:
+            légende += "X=" + joueur + ', '
+
+        elif i == 1:
+            légende += "O=" + joueur
+
+    return légende
 
 
 def formater_plateau(plateau):
@@ -47,7 +55,21 @@ def formater_plateau(plateau):
     Returns:
         str: Chaîne de caractères représentant le plateau.
     """
-    pass
+
+    plateau_formaté = "   -------------------\n"
+    plateau_list = plateau['plateau']
+
+    for i, rangée in enumerate(plateau_list, start=1):
+        plateau_formaté += f"{i + 1} | "
+        for cellule in rangée:
+            plateau_formaté += f"{cellule} | "
+            plateau_formaté = plateau_formaté[:-2] + "|\n"
+
+            if i < len(plateau_list):
+               plateau_formaté += "  |---|---|---|---|---|\n"
+
+    plateau_formaté += "--|---|---|---|---|---\n"
+    plateau_formaté += "  | 1   2   3   4   5\n"
 
 
 def formater_jeu(joueurs, plateau):
