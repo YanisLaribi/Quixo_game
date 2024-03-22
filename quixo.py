@@ -35,14 +35,8 @@ def formater_légende(joueurs):
     Returns:
         str: Chaîne de caractères représentant la légende.
     """
-    légende = "Légende: "
-    for i, joueur in enumerate(joueurs):
-        if i == 0:
-            légende += "X=" + joueur + ', '
-
-        elif i == 1:
-            légende += "O=" + joueur
-
+    légende = f"Légende: X={joueurs[0]}, O={joueurs[1]}" + '\n'
+    print(légende)
     return légende
 
 
@@ -57,19 +51,21 @@ def formater_plateau(plateau):
     """
 
     plateau_formaté = "   -------------------\n"
-    plateau_list = plateau['plateau']
+    plateau_list = plateau
 
     for i, rangée in enumerate(plateau_list, start=1):
-        plateau_formaté += f"{i + 1} | "
+        plateau_formaté += f"{i} | "
         for cellule in rangée:
             plateau_formaté += f"{cellule} | "
-            plateau_formaté = plateau_formaté[:-2] + "|\n"
+        plateau_formaté = plateau_formaté[:-2] + "|\n"
 
-            if i < len(plateau_list):
-               plateau_formaté += "  |---|---|---|---|---|\n"
+        if i < len(plateau_list):
+            plateau_formaté += "  |---|---|---|---|---|\n"
 
     plateau_formaté += "--|---|---|---|---|---\n"
     plateau_formaté += "  | 1   2   3   4   5\n"
+    print(plateau_formaté)
+    return plateau_formaté
 
 
 def formater_jeu(joueurs, plateau):
@@ -84,8 +80,11 @@ def formater_jeu(joueurs, plateau):
     Returns:
         str: Chaîne de caractères représentant le jeu.
     """
-    pass
+    légende = formater_légende(joueurs)
+    plateau_formaté = formater_plateau(plateau)
 
+    jeu_formaté = légende + plateau_formaté
+    return jeu_formaté
 
 def formater_les_parties(parties):
     """Formater la liste des dernières parties.
@@ -98,7 +97,21 @@ def formater_les_parties(parties):
     Returns:
         str: Représentation des parties
     """
-    pass
+    parties_formatées = []
+    
+    for i, partie in enumerate(parties, start=1):
+        date = partie['date']
+        joueurs = ' vs '.join(partie['joueurs'])
+        gagnant = partie['gagnant']
+
+        if gagnant:
+            parties_formatées.append(f"{i}: {date}, {joueurs}, gagnant: {gagnant}")
+
+        else:
+            parties_formatées.append(f"{i}: {date}, {joueurs}")
+
+    return '\n'.join(parties_formatées)
+
 
 
 def récupérer_le_coup():
