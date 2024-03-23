@@ -123,6 +123,6 @@ def récupérer_le_coup():
         Quelle direction voulez-vous insérer? ('haut', 'bas', 'gauche', 'droite') :
     """
     origine = input("Donnez la position d'origine du bloc (x,y) : ")
-    direction = input("Quelle direction voulez-vous insérer? ('haut', 'bas', 'gauche', 'droite') : ")
+    directio = input("Quelle direction voulez-vous insérer? ('haut', 'bas', 'gauche', 'droite') : ")
     origine = [int(coord) for coord in origine.split(',')]
-    return origine, direction
+    return origine, directio

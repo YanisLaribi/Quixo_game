@@ -6,6 +6,7 @@ from quixo import formater_plateau, formater_jeu, formater_légende
 
 
 def test_formater_légende():
+    """Test de la fonciton à formater"""
     joueurs = ["josmi42", "automate"]
 
     attendu = (
@@ -18,6 +19,7 @@ def test_formater_légende():
 
 
 def test_formater_plateau_pour_une_nouvelle_partie():
+    """test de la fonction..."""
     plateau = [
         [" ", " ", " ", " ", " "],
         [" ", " ", " ", " ", " "],
@@ -47,6 +49,7 @@ def test_formater_plateau_pour_une_nouvelle_partie():
 
 
 def test_formater_jeu_pour_une_nouvelle_partie():
+    """test de la fonction..."""
     joueurs = ["josmi42", "automate"]
     plateau = [
         [" ", " ", " ", " ", " "],
@@ -78,6 +81,7 @@ def test_formater_jeu_pour_une_nouvelle_partie():
 
 
 def test_formater_jeu_pour_une_partie_avancée():
+    """test de la fonction..."""
     joueurs = ["josmi42", "automate"]
     plateau = [
         [" ", " ", "X", " ", " "],
