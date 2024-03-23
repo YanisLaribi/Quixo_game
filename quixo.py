@@ -20,7 +20,9 @@ def analyser_commande():
     """
     parser = argparse.ArgumentParser(description="Quixo")
 
-    parser.add_argument("idul", help="IDUL du joueur")
+    parser.add_argument(
+        "idul", help="IDUL du joueur"
+        )
 
     parser.add_argument("-p", "--parties", action="store_true", help="Lister les parties existantes")
 

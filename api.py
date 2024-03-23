@@ -65,11 +65,13 @@ def débuter_partie(idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
-    rep = requests.post(URL + "partie/", auth = (idul, secret))
+    rep = requests.post(
+        URL + "partie/",
+          auth = (idul, secret)
+          )
 
+    tupl = rep.json()
     if rep.status_code == 200:
-        tupl = rep.json()
-
         identifiant = tupl.get('id')
         liste_joueur = tupl.get('état').get('joueurs')
         état_du_plateau = tupl.get('état')
@@ -151,7 +153,11 @@ def jouer_coup(id_partie, origine, direction, idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
-    rep = requests.put(URL + "jouer/", auth = (idul, secret))
+    rep = requests.put(URL + "jouer/",json={
+        "id": "clé-de-la-partie",
+        "origine": [1, 5],
+        "direction": "haut",
+        }, auth = (idul, secret))
     if rep.status_code == 200:
         partie_data = rep.json()
         partie_id = partie_data.get('id')
