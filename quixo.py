@@ -102,15 +102,9 @@ def formater_les_parties(parties):
         joueurs = ' vs '.join(partie['joueurs'])
         gagnant = partie['gagnant']
         if gagnant:
-            parties_formatées.append(f"{i}: {date},
-                                      {joueurs}, 
-                                      gagnant: {gagnant}"
-                                      )
+            parties_formatées.append(f"{i}: {date}, {joueurs}, gagnant: {gagnant}")
         else:
-            parties_formatées.append(f"{i}:
-                                      {date},
-                                      {joueurs}"
-                                      )
+            parties_formatées.append(f"{i}:{date},{joueurs}")
     return '\n'.join(parties_formatées)
 
 
