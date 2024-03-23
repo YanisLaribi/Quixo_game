@@ -30,24 +30,22 @@ def lister_parties(idul, secret):
         list: Liste des parties reçues du serveur,
              après avoir décodé le json de sa réponse.
     """
-    rep = requests.get(URL + "parties/", auth = (idul, secret))
-    
+    rep = requests.get(
+        URL + 'parties',
+        auth = (idul, secret)
+    )
+    list = rep.json()
     if rep.status_code == 200:
-       list = rep.json()
-       parties = list.get('parties')
-       return(parties)
-    
-    elif rep.status_code == 401:
 
-       raise PermissionError(rep.json()["message"])
+        return list['parties']
+    if rep.status_code == 401:
 
-    elif rep.status_code == 406:
+        raise PermissionError(dico['message'])
+    if rep.status_code == 406:
 
-       raise RuntimeError(rep.json()["message"])
-    
-    else : 
-        raise ConnectionError
-    
+        raise RuntimeError(dico['message'])
+    raise ConnectionError
+
 
 def débuter_partie(idul, secret):
     """Débuter une partie
@@ -65,27 +63,18 @@ def débuter_partie(idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
-    rep = requests.post(
-        URL + "partie/",
-          auth = (idul, secret)
-          )
-
-    tupl = rep.json()
+    rep = requests.post(URL + 'partie',auth = (idul, secret))
+    list = rep.json()
     if rep.status_code == 200:
-        identifiant = tupl.get('id')
-        liste_joueur = tupl.get('état').get('joueurs')
-        état_du_plateau = tupl.get('état')
 
-        return identifiant, liste_joueur, état_du_plateau
-    
-    elif rep.status_code == 401:
-       raise PermissionError(rep.json()["message"])
+        return list['id'], list['état']['joueurs'], list['état']['plateau']
+    if rep.status_code == 401:
 
-    elif rep.status_code == 406:
-       raise RuntimeError(rep.json()["message"])
-    
-    else : 
-        raise ConnectionError
+        raise PermissionError(list['message'])
+    if rep.status_code == 406:
+
+        raise RuntimeError(list['message'])
+    raise ConnectionError
 
 
 def récupérer_partie(id_partie, idul, secret):
@@ -105,28 +94,18 @@ def récupérer_partie(id_partie, idul, secret):
         tuple: Tuple de 4 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs, de l'état du plateau et du vainqueur.
     """
-    url = f"https://pax.ulaval.ca/quixo/api/h24/partie/{id_partie}"
-    rep = requests.get(url, auth = (idul, secret))
-
+    rep = requests.get(URL + 'partie/' + id_partie,auth = (idul, secret))
+    list = rep.json()
     if rep.status_code == 200:
 
-        tupl = rep.json()
+        return list['id'], list['état']['joueurs'], list['état']['plateau'], list['gagnant']
+    if rep.status_code == 401:
 
-        identifiant = tupl.get('id')
-        liste_joueur = tupl.get('état').get('joueurs')
-        état_du_plateau = tupl.get('état')
-        vainqueur = tupl.get('gagnant')
+        raise PermissionError(list['message'])
+    if rep.status_code == 406:
 
-        return identifiant, liste_joueur, état_du_plateau, vainqueur
-    
-    elif rep.status_code == 401:
-       raise PermissionError(rep.json()["message"])
-
-    elif rep.status_code == 406:
-       raise RuntimeError(rep.json()["message"])
-    
-    else : 
-        raise ConnectionError
+        raise RuntimeError(dico['message'])
+    raise ConnectionError
 
 
 def jouer_coup(id_partie, origine, direction, idul, secret):
@@ -153,27 +132,22 @@ def jouer_coup(id_partie, origine, direction, idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
-    rep = requests.put(URL + "jouer/",json={
-        "id": "clé-de-la-partie",
-        "origine": [1, 5],
-        "direction": "haut",
-        }, auth = (idul, secret))
+    rep = requests.put(
+        URL + 'jouer',
+        auth = (idul, secret),
+        json = {
+            "id": id_partie, 
+            "origine": origine, 
+            "direction": direction,
+        }
+    )
+    list = rep.json()
     if rep.status_code == 200:
-        partie_data = rep.json()
-        partie_id = partie_data.get('id')
-        joueurs = partie_data.get('état').get('joueurs')
-        plateau = partie_data.get('état').get('plateau')
-        return partie_id, joueurs, plateau
-    
-    elif rep.status_code == 200 and rep.json().get('gagnant'):
-        raise StopIteration(f"{rep.json().get('gagnant')}")
-    
-    elif rep.status_code == 401:
-       raise PermissionError(rep.json()["message"])
-
-    elif rep.status_code == 406:
-       raise RuntimeError(rep.json()["message"])
-    
-    else : 
-        raise ConnectionError
-    
+        if list['gagnant'] is not None:
+            raise StopIteration(list['gagnant'])
+        return lisy['id'], list['état']['joueurs'], list['état']['plateau']
+    if rep.status_code == 401:
+        raise PermissionError(list['message'])
+    if rep.status_code == 406:
+        raise RuntimeError(list['message'])
+    raise ConnectionError

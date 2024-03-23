@@ -19,14 +19,10 @@ def analyser_commande():
             et l'attribut «parties» qui est un booléen True/False.
     """
     parser = argparse.ArgumentParser(description="Quixo")
-
     parser.add_argument(
         "idul", help="IDUL du joueur"
         )
-
     parser.add_argument("-p", "--parties", action="store_true", help="Lister les parties existantes")
-
-
     return parser.parse_args()
 
 
@@ -56,16 +52,13 @@ def formater_plateau(plateau):
 
     plateau_formaté = "   -------------------\n"
     plateau_list = plateau
-
     for i, rangée in enumerate(plateau_list, start=1):
         plateau_formaté += f"{i} | "
         for cellule in rangée:
             plateau_formaté += f"{cellule} | "
         plateau_formaté = plateau_formaté[:-2] + "|\n"
-
         if i < len(plateau_list):
             plateau_formaté += "  |---|---|---|---|---|\n"
-
     plateau_formaté += "--|---|---|---|---|---\n"
     plateau_formaté += "  | 1   2   3   4   5\n"
     print(plateau_formaté)
@@ -86,7 +79,6 @@ def formater_jeu(joueurs, plateau):
     """
     légende = formater_légende(joueurs)
     plateau_formaté = formater_plateau(plateau)
-
     jeu_formaté = légende + plateau_formaté
     return jeu_formaté
 
@@ -102,18 +94,14 @@ def formater_les_parties(parties):
         str: Représentation des parties
     """
     parties_formatées = []
-    
     for i, partie in enumerate(parties, start=1):
         date = partie['date']
         joueurs = ' vs '.join(partie['joueurs'])
         gagnant = partie['gagnant']
-
         if gagnant:
             parties_formatées.append(f"{i}: {date}, {joueurs}, gagnant: {gagnant}")
-
         else:
             parties_formatées.append(f"{i}: {date}, {joueurs}")
-
     return '\n'.join(parties_formatées)
 
 
@@ -130,10 +118,7 @@ def récupérer_le_coup():
         Donnez la position d'origine du bloc (x,y) :
         Quelle direction voulez-vous insérer? ('haut', 'bas', 'gauche', 'droite') :
     """
-
     origine = input("Donnez la position d'origine du bloc (x,y) : ")
     direction = input("Quelle direction voulez-vous insérer? ('haut', 'bas', 'gauche', 'droite') : ")
-
     origine = [int(coord) for coord in origine.split(',')]
-
     return origine, direction
