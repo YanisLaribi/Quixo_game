@@ -40,10 +40,10 @@ def lister_parties(idul, secret):
         return list['parties']
     if rep.status_code == 401:
 
-        raise PermissionError(dico['message'])
+        raise PermissionError(list['message'])
     if rep.status_code == 406:
 
-        raise RuntimeError(dico['message'])
+        raise RuntimeError(list['message'])
     raise ConnectionError
 
 
@@ -104,7 +104,7 @@ def récupérer_partie(id_partie, idul, secret):
         raise PermissionError(list['message'])
     if rep.status_code == 406:
 
-        raise RuntimeError(dico['message'])
+        raise RuntimeError(list['message'])
     raise ConnectionError
 
 
@@ -145,7 +145,7 @@ def jouer_coup(id_partie, origine, direction, idul, secret):
     if rep.status_code == 200:
         if list['gagnant'] is not None:
             raise StopIteration(list['gagnant'])
-        return lisy['id'], list['état']['joueurs'], list['état']['plateau']
+        return list['id'], list['état']['joueurs'], list['état']['plateau']
     if rep.status_code == 401:
         raise PermissionError(list['message'])
     if rep.status_code == 406:
