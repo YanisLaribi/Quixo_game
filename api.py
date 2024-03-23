@@ -30,8 +30,25 @@ def lister_parties(idul, secret):
         list: Liste des parties reçues du serveur,
              après avoir décodé le json de sa réponse.
     """
-    pass
+    rep = requests.get(URL + "parties/", auth = (idul, secret))
+    
+    if rep.status_code == 200:
+       list = rep.json()
+       return(list.values())
+    
+    if rep.status_code == 401:
+       list = rep.json()
+       message = list.values 
+       raise PermissionError(message)
 
+    if rep.status_code == 406:
+       list = rep.json() 
+       message = list.values
+       raise(message)
+    
+    else : 
+        raise ConnectionError
+    
 
 def débuter_partie(idul, secret):
     """Débuter une partie
@@ -49,7 +66,31 @@ def débuter_partie(idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
-    pass
+    rep = requests.get(URL + "partie/", auth = (idul, secret))
+
+    if rep.status_code == 200:
+        
+        tuple = rep.json()
+
+        identifiant = tuple.get('id')
+        liste_joueur = 
+        état_du_plateau = tuple.get('état')
+        vainqueur = tuple.get('gagnant')
+
+        return identifiant, liste_joueur, état_du_plateau, vainqueur
+    
+    if rep.status_code == 401:
+       list = rep.json()
+       message = list.values 
+       raise PermissionError(message)
+
+    if rep.status_code == 406:
+       list = rep.json() 
+       message = list.values
+       raise(message)
+    
+    else : 
+        raise ConnectionError
 
 
 def récupérer_partie(id_partie, idul, secret):
@@ -96,4 +137,4 @@ def jouer_coup(id_partie, origine, direction, idul, secret):
         tuple: Tuple de 3 éléments constitué de l'identifiant de la partie en cours,
             de la liste des joueurs et de l'état du plateau.
     """
-    pass
+    

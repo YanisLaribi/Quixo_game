@@ -11,7 +11,7 @@ from quixo import (
 )
 
 # Mettre ici votre secret récupérer depuis le site de PAX
-SECRET = ""
+SECRET = " 7dc4fe12-e115-45fe-b343-29c89dc9b9b9"
 
 
 if __name__ == "__main__":
