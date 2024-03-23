@@ -22,7 +22,10 @@ def analyser_commande():
     parser.add_argument(
         "idul", help="IDUL du joueur"
         )
-    parser.add_argument("-p", "--parties", action="store_true", help="Lister les parties existantes")
+    parser.add_argument("-p", "--parties"
+                        , action="store_true",
+                        help="Lister les parties existantes"
+                        )
     return parser.parse_args()
 
 
@@ -99,9 +102,15 @@ def formater_les_parties(parties):
         joueurs = ' vs '.join(partie['joueurs'])
         gagnant = partie['gagnant']
         if gagnant:
-            parties_formatées.append(f"{i}: {date}, {joueurs}, gagnant: {gagnant}")
+            parties_formatées.append(f"{i}: {date},
+                                      {joueurs}, 
+                                      gagnant: {gagnant}"
+                                      )
         else:
-            parties_formatées.append(f"{i}: {date}, {joueurs}")
+            parties_formatées.append(f"{i}:
+                                      {date},
+                                      {joueurs}"
+                                      )
     return '\n'.join(parties_formatées)
 
 
@@ -110,7 +119,8 @@ def récupérer_le_coup():
     """Demander le prochain coup à jouer au joueur.
 
     Returns:
-        tuple: Tuple de 2 éléments composé de l'origine du bloc à déplacer et de sa direction.
+        tuple: Tuple de 2 éléments composé de
+          l'origine du bloc à déplacer et de sa direction.
             L'origine est une liste de 2 entiers [x, y].
             La direction est une chaîne de caractères.
 

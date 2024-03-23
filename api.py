@@ -34,16 +34,16 @@ def lister_parties(idul, secret):
         URL + 'parties',
         auth = (idul, secret)
     )
-    list = rep.json()
+    listes = rep.json()
     if rep.status_code == 200:
 
-        return list['parties']
+        return listes['parties']
     if rep.status_code == 401:
 
-        raise PermissionError(list['message'])
+        raise PermissionError(listes['message'])
     if rep.status_code == 406:
 
-        raise RuntimeError(list['message'])
+        raise RuntimeError(listes['message'])
     raise ConnectionError
 
 
@@ -64,16 +64,16 @@ def débuter_partie(idul, secret):
             de la liste des joueurs et de l'état du plateau.
     """
     rep = requests.post(URL + 'partie',auth = (idul, secret))
-    list = rep.json()
+    listes = rep.json()
     if rep.status_code == 200:
 
-        return list['id'], list['état']['joueurs'], list['état']['plateau']
+        return listes['id'], listes['état']['joueurs'], listes['état']['plateau']
     if rep.status_code == 401:
 
-        raise PermissionError(list['message'])
+        raise PermissionError(listes['message'])
     if rep.status_code == 406:
 
-        raise RuntimeError(list['message'])
+        raise RuntimeError(listes['message'])
     raise ConnectionError
 
 
@@ -95,16 +95,16 @@ def récupérer_partie(id_partie, idul, secret):
             de la liste des joueurs, de l'état du plateau et du vainqueur.
     """
     rep = requests.get(URL + 'partie/' + id_partie,auth = (idul, secret))
-    list = rep.json()
+    listes = rep.json()
     if rep.status_code == 200:
 
-        return list['id'], list['état']['joueurs'], list['état']['plateau'], list['gagnant']
+        return listes['id'], listes['état']['joueurs'], listes['état']['plateau'], listes['gagnant']
     if rep.status_code == 401:
 
-        raise PermissionError(list['message'])
+        raise PermissionError(listes['message'])
     if rep.status_code == 406:
 
-        raise RuntimeError(list['message'])
+        raise RuntimeError(listes['message'])
     raise ConnectionError
 
 
@@ -141,13 +141,13 @@ def jouer_coup(id_partie, origine, direction, idul, secret):
             "direction": direction,
         }
     )
-    list = rep.json()
+    listes = rep.json()
     if rep.status_code == 200:
-        if list['gagnant'] is not None:
-            raise StopIteration(list['gagnant'])
-        return list['id'], list['état']['joueurs'], list['état']['plateau']
+        if listes['gagnant'] is not None:
+            raise StopIteration(listes['gagnant'])
+        return listes['id'], listes['état']['joueurs'], listes['état']['plateau']
     if rep.status_code == 401:
-        raise PermissionError(list['message'])
+        raise PermissionError(listes['message'])
     if rep.status_code == 406:
-        raise RuntimeError(list['message'])
+        raise RuntimeError(listes['message'])
     raise ConnectionError
