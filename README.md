@@ -1,33 +1,33 @@
-Quixo – Interactive Online Game (University Python Project)
+# Quixo – Interactive Online Game (University Python Project)
+
 <img src="https://pax.ulaval.ca/static/GLO-1901/images/quixo.jpg" style="display: block; margin-left: auto; margin-right: auto;" alt="Quixo" width="50%" height="auto">
-Quixo is a Python application that lets you play the strategic game of Quixo from the command line. It uses API calls to communicate with an online game server, manages the game board and match states, and provides tools for automated testing and game management. This project blends direct terminal interaction with real-time server integration.
 
-Features
-Creation and management of Quixo games using a third-party API.
+Quixo is a Python application that allows you to play the strategic board game Quixo through the command line. The implementation uses API calls to interact with a remote game server, manages the game board and matches, and provides tools for automated testing and game manipulation. This project combines direct terminal interaction with online server integration.
 
-Command line interface for:
+## Features
 
-Starting a new game.
+- Create and manage Quixo matches via a third-party API.
+- Command line interface to:
+    - Start a new match.
+    - Play moves and track game progression.
+    - List and view existing matches.
+    - Display the board and player legend dynamically.
+- Modules for formatting and managing game components (board, matches, moves).
+- Automated test suite to validate core functionalities.
+- In-code documentation to facilitate understanding and extension.
 
-Playing moves and tracking game progress.
+## Project Structure
 
-Listing and viewing existing games.
+- `main.py`: Main entry point managing user interaction and orchestrating the game flow.
+- `api.py`: Interface module for the game server; handles listing, creating, retrieving, and updating matches using secure RESTful calls.
+- `quixo.py`: Utilities for game structure, graphical representation, command parsing, and board/player management.
+- `tests.py`: Unit tests validating key formatting and game logic functions.
+- `.gitignore`: Specifies files and directories to be excluded from version control.
 
-Displaying the board and player legend in real time.
 
-Modules for formatting and handling game elements (board, games, moves).
+---
 
-Automated test suite to ensure core modules work properly.
+This project was developed for educational purposes as part of a university course, providing a solid base for command-line gaming with API integration.
 
-In-code documentation for easy onboarding and extension.
 
-Project Structure
-main.py: Main entry point, manages user interaction and coordinates the flow of a Quixo match.
 
-api.py: Server interface module; lists, creates, retrieves, and modifies games via secure REST calls.
-
-quixo.py: Utility functions for game structure and graphical representation, command parsing, player and board management.
-
-tests.py: Unit tests for key formatting and manipulation functions of Quixo.
-
-file.gitignore: List of files to ignore in version control.
