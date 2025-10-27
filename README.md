@@ -1,4 +1,4 @@
-# Quixo – Interactive Online Game (University Python Project)
+# Quixo – Game (University Python Project)
 
 <img src="https://pax.ulaval.ca/static/GLO-1901/images/quixo.jpg" style="display: block; margin-left: auto; margin-right: auto;" alt="Quixo" width="50%" height="auto">
 
